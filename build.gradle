@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.edu'
+version '1.0-SNAPSHOT'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+repositories {
+    mavenCentral()
+}
+
+ext.versions = [
+    junit: '5.9.0',
+    lombok: '1.18.24'
+]
+
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: versions.junit
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: versions.junit
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: versions.junit
+
+    testImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+}
+
+test {
+    useJUnitPlatform()
+}
