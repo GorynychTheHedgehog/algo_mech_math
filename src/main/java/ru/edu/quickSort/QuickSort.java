@@ -3,6 +3,7 @@ package ru.edu.quickSort;
 import java.util.Arrays;
 
 public class QuickSort {
+    private static final int INSERTION_SORT_THRESHOLD = 47;
 
     public static void main(String[] args) {
         var array = new Integer[]{3, 1, 4, 2, 5, 0, 6};
@@ -24,13 +25,27 @@ public class QuickSort {
      */
     private static <T extends Comparable<T>> void applyQuickSort(T[] array, int start, int end) {
         if (start < end) {
+            if (end - start < INSERTION_SORT_THRESHOLD) {
+                insertionSort(array, start, end);
+            } else {
+                var partitionIndex = partition(array, start, end);
 
-            //TODO add insertionSort if end - start < ?
-            var partitionIndex = partition(array, start, end);
+                //TODO only one recursion
+                applyQuickSort(array, start, partitionIndex - 1);
+                applyQuickSort(array, partitionIndex + 1, end);
+            }
+        }
+    }
 
-            //TODO only one recursion
-            applyQuickSort(array, start, partitionIndex - 1);
-            applyQuickSort(array, partitionIndex + 1, end);
+    private static <T extends Comparable<T>> void insertionSort(T[] array, int start, int end) {
+        for (int i = start + 1; i < end; i++) {
+            var element = array[i];
+            var cursor = i - 1;
+            while (cursor > start - 1 && array[cursor].compareTo(element) > 0) {
+                array[cursor + 1] = array[cursor];
+                cursor--;
+            }
+            array[cursor + 1] = element;
         }
     }
 
