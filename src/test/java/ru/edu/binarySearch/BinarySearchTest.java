@@ -1,14 +1,14 @@
+package ru.edu.binarySearch;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
-
 import lombok.Builder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import ru.edu.binarySearch.BinarySearch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -64,6 +64,9 @@ public class BinarySearchTest {
         assertEquals(element, array[result]);
     }
 
+    //известная проблема, что нельзя комбинировать parametrized и repeated
+    //в QuickSortTest создал TestTemplate, чтобы показать как это можеоно сделать
+    // TODO добавить testTemplate
     @RepeatedTest(REPETITIONS)
     @DisplayName("BinarySearch works for random arrays and finds element.")
     void BinarySearchTest_when_SortedArray_then_FindTarget(RepetitionInfo repetitionInfo){
