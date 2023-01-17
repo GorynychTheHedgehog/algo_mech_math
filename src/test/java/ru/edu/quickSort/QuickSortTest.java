@@ -69,7 +69,7 @@ public class QuickSortTest {
     private Integer[] generateIntArray(int size) {
         var array = new Integer[size];
         for (int i = 0; i < array.length; i++) {
-            array[i] = ThreadLocalRandom.current().nextInt(0, 10);
+            array[i] = ThreadLocalRandom.current().nextInt();
         }
         return array;
     }
