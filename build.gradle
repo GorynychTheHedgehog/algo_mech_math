@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'idea'
 }
 
 group 'ru.edu'
@@ -12,17 +13,33 @@ repositories {
 }
 
 ext.versions = [
-    junit: '5.9.0',
-    lombok: '1.18.24'
+    guava:  '31.0.1-jre',
+    junit:  '5.9.0',
+    lombok: '1.18.24',
+    jmh:    '1.36'
 ]
 
 dependencies {
+    // guava
+    implementation group: 'com.google.guava', name: 'guava', version: versions.guava
+
+    // lombok
+    implementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+    // tests
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: versions.junit
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: versions.junit
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: versions.junit
 
     testImplementation group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+    // benchmarking
+    testImplementation group: 'org.openjdk.jmh', name: 'jmh-core', version: versions.jmh
+    testAnnotationProcessor group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: versions.jmh
+
+
 }
 
 test {
