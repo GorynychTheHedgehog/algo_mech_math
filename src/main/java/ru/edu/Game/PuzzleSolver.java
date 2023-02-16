@@ -7,21 +7,23 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class PuzzleSolver {
     private static final int SIZE = 4;
+    private static final int A = 5;
+    private static final int B = 1;
 
     public static void main(String[] args) {
         var puzzleSolver = new PuzzleSolver();
 
-        Puzzle puzzle = new Puzzle(SIZE);
+        Puzzle puzzle = Puzzle.init(SIZE);
 
+        System.out.println("\nInitial position: ");
         System.out.println(puzzle);
-        System.out.println(puzzleSolver.countManhattanDistance(puzzle));
 
         puzzleSolver.shuffle(puzzle, 1000);
-        System.out.println(puzzle);
-        System.out.println(puzzleSolver.countManhattanDistance(puzzle));
 
         List<Puzzle> puzzles = puzzleSolver.solvePuzzle(puzzle);
         Collections.reverse(puzzles);
+
+        System.out.println("\nSolution: ");
         puzzles.forEach(System.out::println);
     }
 
@@ -30,7 +32,7 @@ public class PuzzleSolver {
         var states = new HashMap<Puzzle, State>();
         var queueOfPuzzles = new PriorityQueue<Puzzle>(1000, Comparator.comparingInt(key -> states.get(key).getScore()));
 
-        var initialState = new State(puzzle, 0, countManhattanDistance(puzzle));
+        var initialState = new State(0, countManhattanDistance(puzzle));
 
         previousPuzzles.put(puzzle, null);
         states.put(puzzle, initialState);
@@ -54,7 +56,6 @@ public class PuzzleSolver {
                     continue;
                 }
                 var nextState = new State(
-                        nextPuzzle,
                         states.get(currentPuzzle).numberOfIterations + 1,
                         countManhattanDistance(currentPuzzle)
                 );
@@ -66,7 +67,6 @@ public class PuzzleSolver {
 
         return null;
     }
-
 
     public void shuffle(Puzzle puzzle, int N) {
         for (int i = 0; i < N; i++) {
@@ -89,12 +89,11 @@ public class PuzzleSolver {
 
     @AllArgsConstructor
     static class State {
-        private Puzzle puzzle;
         private int numberOfIterations;
         private int manhattanDistance;
 
         private int getScore() {
-            return 5 * manhattanDistance + numberOfIterations;
+            return A * manhattanDistance + B * numberOfIterations;
         }
     }
 

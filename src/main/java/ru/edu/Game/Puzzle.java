@@ -11,18 +11,20 @@ public class Puzzle {
     private final int[] board;
     @Getter private Position blankTile;
 
-    public Puzzle(int size) {
+    private Puzzle(int size) {
         this.size = size;
         this.board = new int[size * size];
-        init();
     }
 
-    private void init() {
+    public static Puzzle init(int size) {
+        var puzzle = new Puzzle(size);
         for (int i = 0; i < size * size - 1; i++) {
-            board[i] = 1 + i;
+            puzzle.board[i] = 1 + i;
         }
-        board[(size-1) + (size-1) * size] = 0;
-        blankTile = new Position(size-1, size-1);
+        puzzle.board[(size-1) + (size-1) * size] = 0;
+        puzzle.blankTile = new Position(size-1, size-1);
+
+        return puzzle;
     }
 
     public Iterable<Integer> getTiles() {
